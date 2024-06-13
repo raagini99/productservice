@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 //commit1.a
-//commit1.b
+
 @Getter
 @Setter
 public class GetInstructorDto {
