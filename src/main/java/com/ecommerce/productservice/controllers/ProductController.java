@@ -34,7 +34,7 @@ public class ProductController {
         System.out.println(product.getCategory());
         System.out.println(product.getTitle());
         System.out.println(product.getPrice());
-        return "Product created.";
+        return "Product created. ";
     }
 
 }
