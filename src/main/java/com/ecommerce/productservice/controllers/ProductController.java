@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
 
-    private ProductService productService;
+    private final ProductService productService;
 
     public ProductController(ProductService productService) {
         this.productService = productService;
@@ -29,7 +29,7 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-//    @RequestBody Product product -> Converts the received json to a Product java object
+//  @RequestBody Product product -> Converts the received json to a Product java object
     @PostMapping("")
     public String createProduct(@RequestBody Product product) {
         System.out.println(product.getCategory());
