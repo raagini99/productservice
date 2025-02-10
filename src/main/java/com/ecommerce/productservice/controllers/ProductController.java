@@ -1,21 +1,27 @@
 package com.ecommerce.productservice.controllers;
 
 import com.ecommerce.productservice.models.Product;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
 
     // GET http://localhost:8080/products/15 (Correct)
+    /*
     @GetMapping("/{id}")
     public String getProductById(@PathVariable("id") Long id) {
         return "Here is your product "+id;
+    }
+    */
+
+    @GetMapping("/{id}")
+    public @ResponseBody Product createProduct(@PathVariable("id") Long id) {
+        Product product = new Product();
+        product.setId(id);
+        product.setName("Dummy Product Name");
+        product.setPrice(100.0);
+        return product;
     }
 
     // GET http://localhost:8080/products/15 (Wrong)
