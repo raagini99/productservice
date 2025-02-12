@@ -1,10 +1,12 @@
 package com.ecommerce.productservice.models;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Data //Doesn't show address when called. Instead, shows attributes and values.
 public class Product {
     /*
     //Does not need getters and setters.
@@ -18,9 +20,10 @@ public class Product {
 
     //Needs getters and setters.
     private Long id;
-    private String name;
+    private String title;
     private String description;
     private Double price;
-    private String imageUrl;
+    private String image;
     private String category;
+    private String seller;
 }
