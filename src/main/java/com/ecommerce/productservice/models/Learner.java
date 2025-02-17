@@ -8,7 +8,7 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-class Learner extends User {
+public class Learner extends User {
     Double psp;
     Double CGPA;
 }

@@ -1,10 +1,11 @@
 package com.ecommerce.productservice.services;
 
 import com.ecommerce.productservice.models.Instructor;
+import com.ecommerce.productservice.models.Learner;
 import com.ecommerce.productservice.models.User;
 import com.ecommerce.productservice.repositories.InstructorRepository;
+import com.ecommerce.productservice.repositories.LearnerRepository;
 import com.ecommerce.productservice.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,12 +18,15 @@ public class UserService {
 
     private final InstructorRepository instructorRepository;
 
-    public UserService(UserRepository userRepository, InstructorRepository instructorRepository) {
+    private final LearnerRepository learnerRepository;
+
+    public UserService(UserRepository userRepository, InstructorRepository instructorRepository, LearnerRepository learnerRepository) {
         this.userRepository = userRepository;
         this.instructorRepository = instructorRepository;
+        this.learnerRepository = learnerRepository;
     }
 
-    public Instructor createInstructor(String name, String email) {
+    public User createInstructor(String name, String email) {
         Instructor instructor = new Instructor();
         instructor.setName(name);
         instructor.setEmail(email);
@@ -37,6 +41,21 @@ public class UserService {
         return Optional.ofNullable(users);
     }
 
+    public User createLearner(String name, String email) {
+        Learner learner = new Learner();
+        learner.setName(name);
+        learner.setEmail(email);
+        learner.setCGPA(9.0);
+        learner.setPsp(100.0);
+        learnerRepository.save(learner);
+        return learner;
+    }
+
+    public Optional<List<User>> getLearnersByName(String name) {
+        List<User> users = learnerRepository.findByName(name);
+        return Optional.ofNullable(users);
+    }
+
     /*
     public User createUser(String name, String email) {
         User user = new User();
@@ -47,9 +66,9 @@ public class UserService {
     }
     */
 
-    /*
-    public Optional<User> getUserByName(String name) {
+    //*
+    public Optional<List<User>> getUsersByName(String name) {
         return userRepository.findByName(name);
     }
-    */
+    //*/
 }
