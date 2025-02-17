@@ -3,13 +3,12 @@ package com.ecommerce.productservice.dtos;
 import jakarta.persistence.*;
 import lombok.Data;
 
-/*
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter*/
-//@Data
+@Setter
+@Data
 public class CreateUserDto {
     public String name;
     public String email;
