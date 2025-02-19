@@ -45,7 +45,7 @@ public class UserService {
             batch.setInstructor(instructor);
             batch.setName("Batch #DummyNumber");
             batches.add(batch);
-            //batchRepository.saveAndFlush(batch);
+            //batchRepository.save(batch);
         }
         instructor.setBatches(batches);
         instructor.setSalary(30000.0);
@@ -57,7 +57,20 @@ public class UserService {
         GetInstructorDto getInstructorDto = new GetInstructorDto();
         getInstructorDto.setName(instructor.getName());
         getInstructorDto.setEmail(instructor.getEmail());
-        getInstructorDto.setBatchIds(batchRepository.findAllByIds(batchIds));
+
+        batches = instructor.getBatches();
+        /*
+        Iterable<Long> batchIdsIterable = new ArrayList<>(batchIds);
+        batches = batchRepository.findAllById(batchIdsIterable);
+        //Avoid N+1 problem.
+         */
+        List<Long> batchIdsList = new ArrayList<>();
+        for(Batch batch : batches) {
+            batchIdsList.add(batch.getId());
+        }
+        getInstructorDto.setBatchIds(batchIdsList);
+
+
         getInstructorDto.setSalary(30000.0);
         getInstructorDto.setSkill("Backend");
         return getInstructorDto;
