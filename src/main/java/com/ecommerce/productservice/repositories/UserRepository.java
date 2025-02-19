@@ -6,12 +6,13 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-public interface UserRepository extends JpaRepository<User, Long> { //Long is for ID
+public interface UserRepository extends JpaRepository<User, UUID> { //Long is for ID
     //*
     //Remove as mapped super class to use below methods.
     @Override
-    Optional<User> findById(Long id);
+    Optional<User> findById(UUID id);
     Optional<List<User>> findByName(String name);
     Optional<User> findByEmail(String email);
     Optional<User> findAllByNameEndsWith(String suffix);

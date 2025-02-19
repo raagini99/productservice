@@ -1,13 +1,18 @@
 package com.ecommerce.productservice.services;
 
+import com.ecommerce.productservice.dtos.GetInstructorDto;
+import com.ecommerce.productservice.models.Batch;
 import com.ecommerce.productservice.models.Instructor;
 import com.ecommerce.productservice.models.Learner;
 import com.ecommerce.productservice.models.User;
+import com.ecommerce.productservice.repositories.BatchRepository;
 import com.ecommerce.productservice.repositories.InstructorRepository;
 import com.ecommerce.productservice.repositories.LearnerRepository;
 import com.ecommerce.productservice.repositories.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,20 +25,42 @@ public class UserService {
 
     private final LearnerRepository learnerRepository;
 
-    public UserService(UserRepository userRepository, InstructorRepository instructorRepository, LearnerRepository learnerRepository) {
+    private final BatchRepository batchRepository;
+
+    public UserService(UserRepository userRepository, InstructorRepository instructorRepository, LearnerRepository learnerRepository, BatchRepository batchRepository) {
         this.userRepository = userRepository;
         this.instructorRepository = instructorRepository;
         this.learnerRepository = learnerRepository;
+        this.batchRepository = batchRepository;
     }
 
-    public User createInstructor(String name, String email) {
+    public GetInstructorDto createAndGetInstructor(String name, String email, List<Long> batchIds) {
         Instructor instructor = new Instructor();
         instructor.setName(name);
         instructor.setEmail(email);
+        List<Batch> batches = new ArrayList<>();
+        for(Long batchId : batchIds) {
+            Batch batch = new Batch();
+            batch.setId(batchId);
+            batch.setInstructor(instructor);
+            batch.setName("Batch #DummyNumber");
+            batches.add(batch);
+            //batchRepository.saveAndFlush(batch);
+        }
+        instructor.setBatches(batches);
         instructor.setSalary(30000.0);
         instructor.setSkill("Backend");
         instructorRepository.save(instructor);
-        return instructor;
+        //batchRepository.saveAll(batches);
+
+        instructor = instructorRepository.findByEmail(email);
+        GetInstructorDto getInstructorDto = new GetInstructorDto();
+        getInstructorDto.setName(instructor.getName());
+        getInstructorDto.setEmail(instructor.getEmail());
+        getInstructorDto.setBatchIds(batchRepository.findAllByIds(batchIds));
+        getInstructorDto.setSalary(30000.0);
+        getInstructorDto.setSkill("Backend");
+        return getInstructorDto;
     }
 
     public Optional<List<User>> getInstructorsByName(String name) {
