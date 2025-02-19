@@ -59,17 +59,19 @@ public class UserService {
         getInstructorDto.setEmail(instructor.getEmail());
 
         batches = instructor.getBatches();
+        //batches.size();
         /*
         Iterable<Long> batchIdsIterable = new ArrayList<>(batchIds);
         batches = batchRepository.findAllById(batchIdsIterable);
         //Avoid N+1 problem.
          */
+        /*
         List<Long> batchIdsList = new ArrayList<>();
         for(Batch batch : batches) {
             batchIdsList.add(batch.getId());
         }
         getInstructorDto.setBatchIds(batchIdsList);
-
+        */
 
         getInstructorDto.setSalary(30000.0);
         getInstructorDto.setSkill("Backend");
